@@ -176,6 +176,7 @@ if CLIENT then
     hook.Add("CalcView", "fortnite-camera", function(ply, pos, ang, fov)
         local hooker = hook.Run("fortnite-camera-disable")
         if not GetConVar("tpc_enabled"):GetBool() or hooker ~= nil and hooker == true then return end
+        if ply:InVehicle() then return end
         if not ply:Alive() and not GetConVar("tpc_deathcam"):GetBool() then return end
         if ply:ShouldDrawLocalPlayer() or ply:GetViewEntity() ~= ply or IsValid(ply:GetObserverTarget()) then return end
         temerel = LerpVector(GetConVar("tpc_smoothing"):GetBool() and FrameTime() * GetConVar("tpc_ftmp"):GetFloat() or 1, temerel, pos + determineTemerel(ply, ang) + Angle(0, ang.y, ang.r):Forward() * GetConVar("tpc_fortnite"):GetFloat() - ang:Forward() * GetConVar("tpc_backoffset"):GetFloat() + ang:Right() * GetConVar("tpc_rightoffset"):GetFloat() + ang:Up() * GetConVar("tpc_upoffset"):GetFloat())
